@@ -117,3 +117,8 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 alias run-emu="$ANDROID_HOME/tools/emulator @pixel2"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export DOCKER_HOST='tcp://127.0.0.1:2375'
+
+# GO
+export PATH=$PATH:/usr/local/go/bin
