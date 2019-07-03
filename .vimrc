@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved, required
+
 filetype on
-filetype plugin on
+filetype plugin indent on
+
 " ================ General Config ====================
 
 let mapleader=','
@@ -19,12 +21,15 @@ set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 setl nu
-set relativenumber
+" set relativenumber
 
 autocmd FocusLost   * call NumberToggle()
 autocmd FocusGained * call NumberToggle()
 autocmd InsertEnter * call NumberToggle()
 autocmd InsertLeave * call NumberToggle()
+
+" Automatically removing all trailing whitespace
+autocmd BufWritePre * %s/\s\+$//e
 
 "Execute file
 autocmd FileType javascript nmap <Leader>r :!node %<cr>
@@ -69,6 +74,11 @@ map <space>v :vsp <C-R>=expand("%:p:h") . "/" <CR>
 map <space>s :split <C-R>=expand("%:p:h") . "/" <CR>
 map <space>r :r <C-R>=expand("%:p:h") . "/" <CR>
 
+nnoremap tk :tabfirst<CR>
+nnoremap tl :tabnext<CR>
+nnoremap th :tabprev<CR>
+nnoremap tj :tablast<CR>
+
 
 " ESC in CAPS LOCK
 imap <caps> <Esc>
@@ -80,6 +90,8 @@ filetype plugin indent on
 " Set filetypes
 autocmd BufNewFile,BufRead *.slim setlocal filetype=slim
 autocmd BufNewFile,BufRead *.es6 setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.js setlocal filetype=javascript
+autocmd BufNewFile,BufRead *.jsx setlocal filetype=javascript
 autocmd BufNewFile,BufRead *.rb setlocal filetype=ruby
 autocmd BufNewFile,BufRead *.scss setlocal filetype=sass
 
@@ -132,6 +144,12 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+set wildignore+=*.swp                                       " ctrlp - ignore .swp files
+set wildignore+=*.zip                                       " ctrlp - ignore .zip files
+set wildignore+=*.pdf                                       " ctrlp - ignore .pdf files
+set wildignore+=*/node_modules/*                            " ctrlp - ignore node modules
+set wildignore+=*/bower_components/*                        " ctrlp - ignore bower components
+set wildignore+=*/dist/*                                    " ctrlp - ignore grunt build directory
 
 " ================ Scrolling ========================
 set scrolloff=7         "Start scrolling when we're 8 lines away from margins
@@ -166,7 +184,7 @@ set secure
 " Always show status line
 set laststatus=2
 " Respect modeline in files
-set modeline
+"set modeline
 set modelines=4
 " Disable error bells
 set noerrorbells
@@ -177,46 +195,49 @@ set nostartofline
 " Show the current mode
 set title
 
-
 " Start Plugins
 call plug#begin('~/.vim/plugged')
 " Theme
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'w0rp/ale'
-Plug 'kristijanhusak/vim-js-file-import'
-Plug 'jiangmiao/auto-pairs'
-Plug 'w0ng/vim-hybrid'
+" Plug 'haishanh/night-owl.vim'
+
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'kristijanhusak/vim-js-file-import'
+Plug 'w0ng/vim-hybrid'
 
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 Plug 'leshill/vim-json'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'scrooloose/nerdcommenter'
 
+Plug 'Valloric/YouCompleteMe'
+
+" Gist
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
+
+" Search/navigation
+Plug 'scrooloose/nerdtree'
+Plug 'rking/ag.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'w0rp/ale'
 
 " End Plugins
 call plug#end()
 
 " Javascript
-let g:javascript_plugin_flow = 1
-
-" Theme
-syntax on
+"let g:javascript_plugin_flow = 1
 let g:hybrid_custom_term_colors = 0
 let g:hybrid_reduced_contrast = 0
 set background=dark
 colorscheme hybrid
 
-" Ale
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-
-let b:ale_fixers = {'javascript': ['prettier', 'eslint']}
-let g:ale_sign_error = '●' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
 "Vim js file import
 nnoremap <Leader>j :ImportJSWord<cr>
@@ -253,9 +274,98 @@ let g:fzf_colors =
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " MAPS
-" nnoremap <leader>f :Find<cr>
 nnoremap <C-p> :Files<cr>
-nnoremap <leader>gs :Files src<cr>
-nnoremap <leader>gc :Files src/styles<cr>
-nnoremap <leader>n :ALENext<cr>
-nnoremap <leader>pk :tabe package.json<cr>
+noremap <leader>pk :tabe package.json<cr>
+
+" Navigation in splits tabs
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Copy
+nnoremap <C-y> "+y
+vnoremap <C-y> "+y
+
+" Ag
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s --ignore-dir node_modules -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE>
+
+" Toggle copen / cclose
+function! QuickFix_toggle()
+  for i in range(1, winnr('$'))
+    let bnum = winbufnr(i)
+    if getbufvar(bnum, '&buftype') == 'quickfix'
+      cclose
+      return
+    endif
+  endfor
+
+  copen
+endfunction
+
+nnoremap <C-t> :call QuickFix_toggle()<cr>
+
+" NedTree'
+map <C-n> :NERDTreeToggle<CR>
+
+" inoremap Ctrl + X Ctrl + O
+" inoremap <C-Space> <C-x><C-o>
+inoremap <C-O> <C-X><C-O>
+
+" fugitive git bindings
+nnoremap <space>gb :Gblame<CR><CR>
+nnoremap <space>ge :Gedit<CR>
+nnoremap <space>gd :Gdiff<CR>
+nnoremap <space>gs :Gstatus<CR>
+nnoremap <space>gc :Gcommit -v -q<CR>
+nnoremap <space>gt :Gcommit -v -q %:p<CR>
+nnoremap <space>ga :Git add %:p<CR><CR>
+
+nnoremap <space>gr :Gread<CR>
+nnoremap <space>gw :Gwrite<CR><CR>
+nnoremap <space>go :Git checkout<Space>
+" statusline git
+" set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
+set statusline+=%F
+
+" NERDComment
+let g:NERDSpaceDelims = 1
+
+" YouCompleteMe
+let g:ycm_keep_logfiles = 1
+let g:ycm_log_level = 'debug'
+let g:ycm_max_diagnostics_to_display = 0
+let g:ycm_show_diagnostics_ui = 0
+
+let g:ycm_auto_trigger = 1
+let g:ycm_key_invoke_completion = '<C-Space>'
+
+nnoremap <Leader>] :YcmCompleter GoTo<CR>
+let g:ycm_max_diagnostics_to_display = 0
+
+" Back preview file
+nnoremap <Leader>b  :e#<CR>
+
+" Ale
+let g:ale_linters = {'javascript': ['eslint', 'flow']}
+let g:ale_lint_on_save = 1
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
