@@ -148,6 +148,8 @@ set wildignore+=*.swp                                       " ctrlp - ignore .sw
 set wildignore+=*.zip                                       " ctrlp - ignore .zip files
 set wildignore+=*.pdf                                       " ctrlp - ignore .pdf files
 set wildignore+=*/node_modules/*                            " ctrlp - ignore node modules
+set wildignore+=*/node_modules                              " ctrlp - ignore node modules
+set wildignore+=*node_modules                              " ctrlp - ignore node modules
 set wildignore+=*/bower_components/*                        " ctrlp - ignore bower components
 set wildignore+=*/dist/*                                    " ctrlp - ignore grunt build directory
 
@@ -209,6 +211,9 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'kristijanhusak/vim-js-file-import'
 Plug 'w0ng/vim-hybrid'
 
+" New stuffs
+Plug 'wsdjeg/vim-fetch'
+
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
@@ -227,6 +232,7 @@ Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
+Plug 'kien/ctrlp.vim'
 
 " End Plugins
 call plug#end()
@@ -292,14 +298,14 @@ vnoremap <C-y> "+y
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " The Silver Searcher
-if executable('ag')
+" if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  " set grepprg=ag\ --nogroup\ --nocolor
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s --ignore-dir node_modules -l --nocolor -g ""'
+  " let g:ctrlp_user_command = 'ag %s --ignore-dir ./node_modules -l --nocolor -g ""'
   " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
+  " let g:ctrlp_use_caching = 0
+" endif
 
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!

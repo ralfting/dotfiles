@@ -62,7 +62,8 @@ ZSH_THEME="junkfood"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,19 +103,18 @@ alias reload!='source ~/.zshrc'
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-export NVM_DIR="/home/ralfting/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Android emulator
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/emulator
+# export ANDROID_HOME=$HOME/Android/Sdk
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export PATH=$PATH:$ANDROID_HOME/emulator
 # Set alias to shorten command to run emulator
-alias run-emu="$ANDROID_HOME/tools/emulator @pixel2"
+# alias run-emu="$ANDROID_HOME/tools/emulator @pixel2"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -122,3 +122,14 @@ export DOCKER_HOST='tcp://127.0.0.1:2375'
 
 # GO
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/ralfting/exec
+
+# Composer
+export PATH=$PATH:$HOME/.composer/vendor/bin
+
+export EDITOR='vim'
+
+export YVM_DIR=/home/ralfting/.yvm
+[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
+
+
