@@ -122,3 +122,6 @@ export DOCKER_HOST='tcp://127.0.0.1:2375'
 
 # GO
 export PATH=$PATH:/usr/local/go/bin
+
+export YVM_DIR=/home/ralfting/.yvm
+[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
