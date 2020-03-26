@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/ralfting/.oh-my-zsh"
+export ZSH="/home/ralfting/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -95,6 +95,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # Navigation
 alias workspace="cd ~/Workspace"
 alias studies="cd ~/Workspace/studies"
+alias brainn="cd ~/Workspace/brainn"
 # Files
 alias vimrc!='vim ~/.vimrc'
 alias zshrc!='vim ~/.zshrc'
@@ -132,4 +133,6 @@ export EDITOR='vim'
 export YVM_DIR=/home/ralfting/.yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
 
+# Shell history to elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
 

@@ -201,8 +201,8 @@ set title
 call plug#begin('~/.vim/plugged')
 " Theme
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'haishanh/night-owl.vim'
 
+" Common
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
@@ -214,8 +214,13 @@ Plug 'w0ng/vim-hybrid'
 " New stuffs
 Plug 'wsdjeg/vim-fetch'
 
+" Syntax
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'Quramy/tsuquyomi'
+Plug 'easymotion/vim-easymotion'
 
 Plug 'leshill/vim-json'
 Plug 'scrooloose/nerdcommenter'
@@ -245,12 +250,13 @@ set background=dark
 colorscheme hybrid
 
 
+" Typescript
+nnoremap <leader>g :TsuDefinition<CR>
+
 "Vim js file import
 nnoremap <Leader>j :ImportJSWord<cr>
 nnoremap <Leader>i :ImportJSFix<cr>
-nnoremap <Leader>g :ImportJSGoto<cr>
-
-let g:js_file_import_sort_after_insert = 1
+nnoremap <Leader>] :YcmCompleter GoTo<CR>
 
 " FZF
 let g:fzf_colors =
@@ -267,16 +273,6 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" --column: Show column number
-" --line-number: Show line number
-" --no-heading: Do not show file headings in results
-" --fixed-strings: Search term as a literal string
-" --ignore-case: Case insensitive search
-" --no-ignore: Do not respect .gitignore, etc...
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-" --color: Search color options
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " MAPS
@@ -298,20 +294,20 @@ vnoremap <C-y> "+y
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " The Silver Searcher
-" if executable('ag')
+if executable('ag')
   " Use ag over grep
-  " set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  " let g:ctrlp_user_command = 'ag %s --ignore-dir ./node_modules -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s --ignore-dir ./node_modules -l --nocolor -g ""'
   " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
-" endif
+  let g:ctrlp_use_caching = 0
+endif
 
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 
-" Toggle copen / cclose
+" Toggle copen / close
 function! QuickFix_toggle()
   for i in range(1, winnr('$'))
     let bnum = winbufnr(i)
@@ -341,10 +337,13 @@ nnoremap <space>gs :Gstatus<CR>
 nnoremap <space>gc :Gcommit -v -q<CR>
 nnoremap <space>gt :Gcommit -v -q %:p<CR>
 nnoremap <space>ga :Git add %:p<CR><CR>
-
 nnoremap <space>gr :Gread<CR>
 nnoremap <space>gw :Gwrite<CR><CR>
 nnoremap <space>go :Git checkout<Space>
+
+" Back preview file
+nnoremap <Leader>b  :e#<CR>
+
 " statusline git
 " set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
 set statusline+=%F
@@ -357,15 +356,9 @@ let g:ycm_keep_logfiles = 1
 let g:ycm_log_level = 'debug'
 let g:ycm_max_diagnostics_to_display = 0
 let g:ycm_show_diagnostics_ui = 0
-
 let g:ycm_auto_trigger = 1
 let g:ycm_key_invoke_completion = '<C-Space>'
-
-nnoremap <Leader>] :YcmCompleter GoTo<CR>
 let g:ycm_max_diagnostics_to_display = 0
-
-" Back preview file
-nnoremap <Leader>b  :e#<CR>
 
 " Ale
 let g:ale_linters = {'javascript': ['eslint', 'flow']}
@@ -375,3 +368,8 @@ let g:ale_sign_warning = '⚠'
 
 highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+
+" Easymotion
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
