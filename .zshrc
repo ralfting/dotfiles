@@ -86,6 +86,7 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 export SSH_KEY_PATH="~/.ssh/rsa_id"
+export TERM=xterm-256color
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -93,22 +94,29 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # For a full list of active aliases, run `alias`.
 
 # Navigation
-alias workspace="cd ~/Workspace"
+alias ws="cd ~/Workspace"
+alias project="cd ~/Workspace/project"
 alias studies="cd ~/Workspace/studies"
 alias brainn="cd ~/Workspace/brainn"
+alias up="cd .."
 # Files
 alias vimrc!='vim ~/.vimrc'
 alias zshrc!='vim ~/.zshrc'
 alias reload!='source ~/.zshrc'
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files'
+
+# tmux
+if [ -z "$TMUX" ]
+then
+    tmux attach -t TMUX || tmux new -s TMUX
+fi
 
 export DOCKER_HOST='tcp://127.0.0.1:2375'
 export PATH=$PATH:/home/ralfting/exec
@@ -119,3 +127,9 @@ export YVM_DIR=/home/ralfting/.yvm
 # Shell history to elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=003'
+
+export YVM_DIR=/root/.yvm
+
+# AsdF
+. $HOME/.asdf/asdf.sh
