@@ -210,16 +210,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'scrooloose/nerdcommenter'
   Plug 'preservim/nerdtree'
+  Plug 'tpope/vim-eunuch'
+  Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
   "Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'SirVer/ultisnips'
 call plug#end()
 
 " COC
-" Show autocomplete when Tab is pressed
-inoremap <silent><expr> <Tab> coc#refresh()
-
-
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -258,3 +257,19 @@ nnoremap <space>ga :Git add %:p<CR><CR>
 nnoremap <space>gr :Gread<CR>
 nnoremap <space>gw :Gwrite<CR><CR>
 nnoremap <space>go :Git checkout<Space>
+
+let g:user_emmet_leader_key='<C-Z>'
+
+" Set toggle paste
+set pastetoggle=<F3>
+
+" VM
+let g:VM_mouse_mappings = 1
+let g:VM_theme = 'iceblue'
+let g:VM_highlight_matches = 'underline'
+
+let g:VM_maps = {}
+let g:VM_maps["Undo"] = 'u'
+let g:VM_maps["Redo"] = '<C-r>'
+
+set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
