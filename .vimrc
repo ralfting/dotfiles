@@ -85,7 +85,7 @@ function! NumberToggle()
 endfunc
 
 " nerd tree
-nmap <silent> <C-n> :call NERDTreeToggleInCurDir()<cr>
+nmap <silent> <C-b> :call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
     exe ":NERDTreeClose"
@@ -212,10 +212,18 @@ call plug#begin('~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'tpope/vim-eunuch'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+  Plug 'vim-test/vim-test'
 
   "Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
+
+  " Elixir
+  Plug 'elixir-editors/vim-elixir' " Syntax highlighting, Filetype detection, Automatic indentation
+  Plug 'mhinz/vim-mix-format' " Run mix formatter asynchronously (:MixFormat, :verb MixFormat, :MixFormatDiff)
+  Plug 'slashmili/alchemist.vim' " Completion for Modules and functions, and much more...
+  Plug 'neomake/neomake' " Execute code checks to find mistakes in the currently edited file
+  Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 call plug#end()
 
 " COC
@@ -263,6 +271,13 @@ let g:user_emmet_leader_key='<C-Z>'
 " Set toggle paste
 set pastetoggle=<F3>
 
+" Vim Test Configurations
+nmap <leader>tn :TestNearest<CR>
+nmap <leader>tf :TestFile<CR>
+nmap <leader>ts :TestSuite<CR>
+nmap <leader>tl :TestLast<CR>
+nmap <leader>tv :TestVisit<CR>
+
 " VM
 let g:VM_mouse_mappings = 1
 let g:VM_theme = 'iceblue'
@@ -272,4 +287,12 @@ let g:VM_maps = {}
 let g:VM_maps["Undo"] = 'u'
 let g:VM_maps["Redo"] = '<C-r>'
 
-set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
+" Mix Format
+
+let g:mix_format_on_save = 1
+
+nnoremap <leader>mf :MixFormat<cr>
+nnoremap <leader>mfv :verb MixFormat<cr>
+nnoremap <leader>mfd :MixFormatDiff<cr>
+
+

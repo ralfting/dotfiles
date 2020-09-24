@@ -104,6 +104,9 @@ alias vimrc!='vim ~/.vimrc'
 alias zshrc!='vim ~/.zshrc'
 alias reload!='source ~/.zshrc'
 
+# Elixir
+alias mixes='mix format && mix format --check-formatted && mix test && mix credo --strict && mix coveralls -u'
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -133,3 +136,6 @@ export YVM_DIR=/root/.yvm
 
 # AsdF
 . $HOME/.asdf/asdf.sh
+
+#export PS1="\\$ "
+
