@@ -17,4 +17,4 @@ set-option -g status-fg white
 #set-window-option -g window-status-current-fg red
 
 
-set -g status-right "☰ #{ram} ↯ #{battery_level} ⧖ #(date '+%a, %b %d, %H:%M') "
+set -g status-right "#(gitmux '#{pane_current_path}') RAM: #{ram_percentage}  CPU: #{cpu_percentage} Ping: #{ping} "

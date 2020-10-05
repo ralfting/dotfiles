@@ -90,7 +90,7 @@ function! NERDTreeToggleInCurDir()
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
     exe ":NERDTreeClose"
   else
-    exe ":NERDTreeFind"
+    exe ":NERDTree"
   endif
 endfunction
 
@@ -147,10 +147,10 @@ let g:fzf_colors =
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " Tab navigation
-nnoremap tk :tabfirst<CR>
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
-nnoremap tj :tablast<CR>
+nnoremap tf :tabfirst<CR>
+nnoremap tn :tabnext<CR>
+nnoremap tp :tabprev<CR>
+nnoremap tl :tablast<CR>
 
 set autoindent
 set smartindent
@@ -204,6 +204,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'w0ng/vim-hybrid'
   Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
+  Plug 'easymotion/vim-easymotion'
 
   Plug 'tpope/vim-surround'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }

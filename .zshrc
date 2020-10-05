@@ -139,3 +139,4 @@ export YVM_DIR=/root/.yvm
 
 #export PS1="\\$ "
 
+export PATH=~/.local/bin:$PATH
