@@ -1,5 +1,7 @@
 ### VIM
 
+`leader = ,`
+
 ## Commands
 
 | Shortcut            |       Description        |
