@@ -130,6 +130,12 @@ set shortmess=atI
 set title
 
 " FZF
+let g:fzf_layout = { 'window': '10split enew' }
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-l': 'vsplit' }
+
 let g:fzf_colors =
       \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
@@ -197,8 +203,6 @@ endfunction
 
 nnoremap <C-t> :call QuickFix_toggle()<cr>
 
-nnoremap <Leader>b  :e#<CR>
-
 call plug#begin('~/.vim/plugged')
   Plug 'dracula/vim', { 'as': 'dracula' }
   Plug 'w0ng/vim-hybrid'
@@ -215,7 +219,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
   Plug 'vim-test/vim-test'
 
-  "Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
 
@@ -248,7 +251,7 @@ colorscheme hybrid
 
 " FZF
 nnoremap <C-p> :Files<CR>
-nnoremap <Leader>b :Buffers<CR>
+noremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 
 " Tags
