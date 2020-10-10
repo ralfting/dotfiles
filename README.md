@@ -12,6 +12,7 @@
 | `<leader>tl`        |          Run last test           |
 | `<leader>b`         |          Open nerd-tree          |
 | `<leader><leader>w` |     Navigate in current file     |
+| `<leader>fw`        |   Find by current cursor word    |
 | `<space>gd`         |             Git diff             |
 | `<space>gb`         |            Git blame             |
 | `<space>gs`         |            Git status            |
