@@ -213,6 +213,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
   Plug 'easymotion/vim-easymotion'
+  Plug 'itchyny/lightline.vim'
 
   Plug 'tpope/vim-surround'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
