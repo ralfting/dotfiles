@@ -24,6 +24,7 @@ set cursorline                  " Set line on cursor
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
+set relativenumber
 setl nu
 
 autocmd BufWritePre * %s/\s\+$//e
@@ -214,6 +215,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-fugitive'
   Plug 'easymotion/vim-easymotion'
   Plug 'itchyny/lightline.vim'
+  Plug 'JamshedVesuna/vim-markdown-preview'
+  Plug 'editorconfig/editorconfig-vim'
 
   Plug 'tpope/vim-surround'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -303,4 +306,6 @@ nnoremap <leader>mf :MixFormat<cr>
 nnoremap <leader>mfv :verb MixFormat<cr>
 nnoremap <leader>mfd :MixFormatDiff<cr>
 
-
+" markdown preview
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_browser='/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe'

@@ -137,6 +137,16 @@ export YVM_DIR=/root/.yvm
 # AsdF
 . $HOME/.asdf/asdf.sh
 
+# Adr tool
+export PATH=$PATH:/root/adr-tools/src
+
+# npm
+export PATH=~/npm-global/bin:$PATH
+
+# execs
+export PATH=~/exec:$PATH
+
 #export PS1="\\$ "
 
 export PATH=~/.local/bin:$PATH
+[ -r $YVM_DIR/yvm.sh ] && source $YVM_DIR/yvm.sh
