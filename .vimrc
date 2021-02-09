@@ -23,7 +23,7 @@ set showmode                    "Show current mode down the bottom
 set cursorline                  " Set line on cursor
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
-set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
+set guifont=FiraCode:h14,Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 set relativenumber
 setl nu
 
@@ -210,6 +210,8 @@ nnoremap <C-t> :call QuickFix_toggle()<cr>
 
 call plug#begin('~/.vim/plugged')
   Plug 'dracula/vim', { 'as': 'dracula' }
+  Plug 'tomasiser/vim-code-dark'
+
   Plug 'w0ng/vim-hybrid'
   Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
@@ -228,7 +230,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-test/vim-test'
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'SirVer/ultisnips'
+  "Plug 'SirVer/ultisnips'
 
   " Elixir
   Plug 'elixir-editors/vim-elixir' " Syntax highlighting, Filetype detection, Automatic indentation
@@ -254,7 +256,14 @@ nmap <leader>f  <Plug>(coc-format-selected)
 let g:hybrid_custom_term_colors = 0
 let g:hybrid_reduced_contrast = 0
 set background=dark
-colorscheme hybrid
+"colorscheme hybrid
+colorscheme codedark
+
+let g:airline_theme = 'codedark'
+
+set enc=utf-8
+set guifont=Powerline_Consolas:h11
+set renderoptions=type:directx,gamma:1.5,contrast:0.5,geom:1,renmode:5,taamode:1,level:0.5
 
 " FZF
 nnoremap <C-p> :Files<CR>

@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/ralfting/.oh-my-zsh"
+export ZSH="/Users/reffting/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -97,19 +97,25 @@ export TERM=xterm-256color
 alias ws="cd ~/Workspace"
 alias project="cd ~/Workspace/project"
 alias studies="cd ~/Workspace/studies"
-alias brainn="cd ~/Workspace/brainn"
+alias ambush="cd ~/Workspace/ambush"
+alias game="cd ~/Workspace/gamedev"
 alias up="cd .."
 # Files
 alias vimrc!='vim ~/.vimrc'
 alias zshrc!='vim ~/.zshrc'
 alias reload!='source ~/.zshrc'
+# NPM link
+alias linkable-modules="find ~/.config/yarn/link -type l"
+alias linked-modules="find node_modules -type l | grep -v .bin"
+alias registered-links="ls -la ~/.config/yarn/link/"
+alias npmt="NPM_TOKEN=ztV87CDz9nnuWibjdxj4 npm"
 
 # Elixir
 alias mixes='mix format && mix format --check-formatted && mix test && mix credo --strict && mix coveralls -u'
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -135,7 +141,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=003'
 export YVM_DIR=/root/.yvm
 
 # AsdF
-. $HOME/.asdf/asdf.sh
+#. $HOME/.asdf/asdf.sh
 
 # Adr tool
 export PATH=$PATH:/root/adr-tools/src

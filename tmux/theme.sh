@@ -10,5 +10,4 @@ set -g status-position bottom
 set -g status-bg colour235
 set-option -g status-fg white
 
-
-set -g status-right "RAM: #{ram_percentage}  CPU: #{cpu_percentage} Ping: #{ping} "
+set -g status-right "RAM: #{ram_percentage}  CPU: #{cpu_percentage}"

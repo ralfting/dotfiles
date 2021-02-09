@@ -35,3 +35,11 @@ Install extensions [COC](https://github.com/neoclide/coc.nvim)
 | `:CocInstall coc-prettier` | [repository](https://github.com/neoclide/coc-prettier) |
 | `:CocInstall coc-snippets` | [repository](https://github.com/neoclide/coc-snippets) |
 | `:CocInstall coc-tsserver` | [repository](https://github.com/neoclide/coc-tsserver) |
+
+### Prettier setup
+Inside `:CocConfig` add the config bellow
+```json
+{
+  "coc.preferences.formatOnSaveFiletypes": ["javascript"]
+}
+```
