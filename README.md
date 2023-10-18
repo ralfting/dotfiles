@@ -20,6 +20,9 @@
 | `gd`                |         Go to definition         |
 | `gs`                |     Go to definition: Split      |
 | `gv`                | Go to definition: Vertical Split |
+| `<leader>c<space>`  | Toggles the comment state of the selected line(s) |
+|` <leader>cm`        | Comments the given lines using only one set of multipart delimiters. |
+|`<leader>cy`         | Same as cc except that the commented line(s) are yanked first. |
 
 ## Dependencies
 
@@ -35,6 +38,7 @@ Install extensions [COC](https://github.com/neoclide/coc.nvim)
 | `:CocInstall coc-prettier` | [repository](https://github.com/neoclide/coc-prettier) |
 | `:CocInstall coc-snippets` | [repository](https://github.com/neoclide/coc-snippets) |
 | `:CocInstall coc-tsserver` | [repository](https://github.com/neoclide/coc-tsserver) |
+| `:CocInstall coc-pairs`    | [repository](https://github.com/neoclide/coc-pairs)    |
 
 ### Prettier setup
 Inside `:CocConfig` add the config bellow
