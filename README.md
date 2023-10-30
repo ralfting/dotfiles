@@ -7,6 +7,7 @@
 | Shortcut            |           Description            |
 | ------------------- | :------------------------------: |
 | `<F3>`              |            Paste Mode            |
+| `<Leader>f`         |           Format Selected        |
 | `<leader>b`         |           History back           |
 | `<leader>tf`        |      Run current file test       |
 | `<leader>tl`        |          Run last test           |
@@ -44,6 +45,7 @@ Install extensions [COC](https://github.com/neoclide/coc.nvim)
 Inside `:CocConfig` add the config bellow
 ```json
 {
-  "coc.preferences.formatOnSaveFiletypes": ["javascript"]
+  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "typescript.tsx"]
 }
 ```
+**typescriptreact**: For ReactJS projects
