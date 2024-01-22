@@ -1,15 +1,13 @@
 set nocompatible
-
 syntax on
 syntax enable
-
-filetype on
 filetype plugin indent on
 
 let mapleader=','
 
 " ================ General Config ====================
 
+set clipboard^=unnamed,unnamedplus
 scriptencoding utf-8          " utf-8 all the way
 set encoding=utf-8
 set number               "Line numbers are good
@@ -23,9 +21,17 @@ set showmode                    "Show current mode down the bottom
 set cursorline                  " Set line on cursor
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
-set guifont=FiraCode:h14,Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 set relativenumber
+set colorcolumn=80
 setl nu
+" Fold config
+set foldmethod=indent
+set foldlevelstart=99
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
 
 autocmd BufWritePre * %s/\s\+$//e
 
@@ -71,21 +77,12 @@ if executable('rg')
   nnoremap \ :Rg <C-R><space>
 endif
 
-" set relativenumber
-autocmd FocusLost   * call NumberToggle()
-autocmd FocusGained * call NumberToggle()
-autocmd InsertEnter * call NumberToggle()
-autocmd InsertLeave * call NumberToggle()
-
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 
 " nerd tree
+let g:NERDTreeWinSize=60
+let g:NERDTreeWinPos = "right"
 nmap <silent> <C-b> :call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
@@ -135,6 +132,7 @@ set shortmess=atI
 set title
 
 " FZF
+let g:fzf_preview_window = []
 let g:fzf_layout = { 'down': '40%' }
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
@@ -212,6 +210,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'dracula/vim', { 'as': 'dracula' }
   Plug 'tomasiser/vim-code-dark'
 
+  Plug 'voldikss/vim-floaterm'
+  Plug 'kshenoy/vim-signature' " Show marks on VIM
+
   Plug 'w0ng/vim-hybrid'
   Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
@@ -219,6 +220,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'itchyny/lightline.vim'
   Plug 'JamshedVesuna/vim-markdown-preview'
   Plug 'editorconfig/editorconfig-vim'
+  Plug 'christoomey/vim-tmux-navigator'
 
   Plug 'tpope/vim-surround'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -230,7 +232,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-test/vim-test'
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  "Plug 'SirVer/ultisnips'
 
   " Elixir
   Plug 'elixir-editors/vim-elixir' " Syntax highlighting, Filetype detection, Automatic indentation
@@ -256,7 +257,6 @@ nmap <leader>f  <Plug>(coc-format-selected)
 let g:hybrid_custom_term_colors = 0
 let g:hybrid_reduced_contrast = 0
 set background=dark
-"colorscheme hybrid
 colorscheme codedark
 
 let g:airline_theme = 'codedark'
@@ -266,6 +266,7 @@ set guifont=Powerline_Consolas:h11
 set renderoptions=type:directx,gamma:1.5,contrast:0.5,geom:1,renmode:5,taamode:1,level:0.5
 
 " FZF
+set splitright
 nnoremap <C-p> :Files<CR>
 noremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
@@ -308,26 +309,41 @@ let g:VM_maps["Undo"] = 'u'
 let g:VM_maps["Redo"] = '<C-r>'
 
 " Mix Format
-
 let g:mix_format_on_save = 1
 
 nnoremap <leader>mf :MixFormat<cr>
 nnoremap <leader>mfv :verb MixFormat<cr>
 nnoremap <leader>mfd :MixFormatDiff<cr>
 
-" markdown preview
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_browser='/mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe'
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_snippet_next = '<tab>'
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" navitation
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
+" Use <c-space> to trigger completion
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+nmap <silent> <leader>gg :FloatermNew --autoclose=1 lazygit<cr>
+let g:floaterm_keymap_toggle = '<leader>ll'
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
